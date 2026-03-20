@@ -11,7 +11,7 @@ Given an input image, the model:
 * Generates a segmentation mask
 * Separates the subject from the background
 
-![App Demo][example/app_demo.png]
+![App Demo](example/app_demo.png)
 
 ## Working
 
