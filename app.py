@@ -12,7 +12,7 @@ image_upload = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png", "avi
 result_image = None
 
 if image_upload:
-    image = Image.open(image_upload)
+    image = Image.open(image_upload).convert("RGB")
     resized_image = image.resize((128, 128))
 
     img_array = tf.keras.utils.img_to_array(resized_image)
