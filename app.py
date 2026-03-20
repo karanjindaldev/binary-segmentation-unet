@@ -1,6 +1,6 @@
 import streamlit as st
 import tensorflow as tf
-from numpy import expand_dims, squeeze
+from numpy import expand_dims, squeeze, dstack
 from keras.models import load_model
 from PIL import Image
 
@@ -19,10 +19,13 @@ if image_upload:
     img_array = expand_dims(img_array, axis=0)
 
     result_array = model.predict(img_array)[0]
-    result_array = result_array * squeeze(img_array)
-    result_array = result_array.astype('uint8')
+    mask = (result_array > 0.5).astype('uint8')
+    print('mask shape:', mask.shape)
+    result_img_array = dstack((squeeze(img_array), mask*255))
+    print('result img array shape: ', result_img_array.shape)
+    result_img_array = result_img_array.astype('uint8')
 
-    result_image = Image.fromarray(result_array)
+    result_image = Image.fromarray(result_img_array)
 
 with st.container(horizontal=True, horizontal_alignment="center", gap="large"):
 

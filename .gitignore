@@ -1,5 +1,4 @@
 *.keras
 Images/
 .ipynb_checkpoints
-venv/
 .vscode/
