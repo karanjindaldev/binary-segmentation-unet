@@ -20,9 +20,8 @@ if image_upload:
 
     result_array = model.predict(img_array)[0]
     mask = (result_array > 0.5).astype('uint8')
-    print('mask shape:', mask.shape)
+
     result_img_array = dstack((squeeze(img_array), mask*255))
-    print('result img array shape: ', result_img_array.shape)
     result_img_array = result_img_array.astype('uint8')
 
     result_image = Image.fromarray(result_img_array)
