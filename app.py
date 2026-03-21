@@ -3,6 +3,7 @@ import tensorflow as tf
 from numpy import expand_dims, squeeze, dstack
 from keras.models import load_model
 from PIL import Image
+from io import BytesIO
 
 model = load_model('model_v1.keras')
 
@@ -25,6 +26,9 @@ if image_upload:
     result_img_array = result_img_array.astype('uint8')
 
     result_image = Image.fromarray(result_img_array)
+    download_img = BytesIO()
+    result_image.save(download_img, format='png')
+    download_img.seek(0)
 
 with st.container(horizontal=True, horizontal_alignment="center", gap="large"):
 
@@ -33,3 +37,4 @@ with st.container(horizontal=True, horizontal_alignment="center", gap="large"):
 
     if result_image is not None:
         st.image(result_image, width=256, caption="Background Removed")
+        st.download_button(label='Download Image', data=download_img, file_name='result.png', mime='image/png')
