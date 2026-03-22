@@ -1,4 +1,6 @@
 *.keras
+*.h5
+__pycache__/
 Images/
 .ipynb_checkpoints
 .vscode/
