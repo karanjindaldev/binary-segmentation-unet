@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-def unet(input_shape):
+def unet(input_shape, is_inside_notebook):
     input_ = tf.keras.Input(shape=input_shape)
     rescaled_input = tf.keras.layers.Rescaling(scale=1/255.)(input_)
 
@@ -20,9 +20,11 @@ def unet(input_shape):
     final_output = tf.keras.layers.Conv2D(filters=1, kernel_size=(1, 1), activation='sigmoid')(dec4)
 
     model = tf.keras.Model(inputs=[input_], outputs=[final_output])
-    model.compile(loss=tf.keras.losses.binary_crossentropy, optimizer=tf.keras.optimizers.Adam(), metrics=['accuracy'])
 
-    model.summary()
+    if is_inside_notebook:
+        model.compile(loss=tf.keras.losses.binary_crossentropy, optimizer=tf.keras.optimizers.Adam(), metrics=['accuracy'])
+        model.summary()
+        
     return model
 
 def encoder_block(input_, filters):
