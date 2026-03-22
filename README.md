@@ -27,4 +27,5 @@ Given an input image, the model:
 
 ## Acknowledgements
 
+Dataset link : [Portrait Segmentation, 128x128](https://www.kaggle.com/datasets/hngngn/portrait-segmentation-128x128)
 Inspired by the original U-Net architecture
