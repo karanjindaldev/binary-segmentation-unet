@@ -14,7 +14,7 @@ def load_model():
     if not os.path.exists(weights):
         gdown.download(url, weights)
 
-    model = unet(input_shape=(128, 128, 3), is_inside_notebook=False)
+    model = unet(input_shape=(128, 128, 3), filters=16, is_inside_notebook=False)
     model.load_weights(weights)
 
     return model
