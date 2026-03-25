@@ -1,21 +1,21 @@
 import tensorflow as tf
 
-def unet(input_shape, is_inside_notebook):
+def unet(input_shape, filters, is_inside_notebook):
     input_ = tf.keras.Input(shape=input_shape)
     rescaled_input = tf.keras.layers.Rescaling(scale=1/255.)(input_)
 
-    skip1, enc1 = encoder_block(rescaled_input, 8)
-    skip2, enc2 = encoder_block(enc1, 16)
-    skip3, enc3 = encoder_block(enc2, 32)
-    skip4, enc4 = encoder_block(enc3, 64)
+    skip1, enc1 = encoder_block(rescaled_input, filters)
+    skip2, enc2 = encoder_block(enc1, filters*2)
+    skip3, enc3 = encoder_block(enc2, filters*4)
+    skip4, enc4 = encoder_block(enc3, filters*8)
 
     enc_pen_ultimate = tf.keras.layers.Conv2D(filters=1024, kernel_size=(3, 3), padding='same', activation='relu')(enc4)
     enc_ultimate = tf.keras.layers.Conv2D(filters=1024, kernel_size=(3, 3), padding='same', activation='relu')(enc_pen_ultimate)
 
-    dec1 = decoder_block(enc_ultimate, skip4, 64)
-    dec2 = decoder_block(dec1, skip3, 32)
-    dec3 = decoder_block(dec2, skip2, 16)
-    dec4 = decoder_block(dec3, skip1, 8)
+    dec1 = decoder_block(enc_ultimate, skip4, filters*8)
+    dec2 = decoder_block(dec1, skip3, filters*4)
+    dec3 = decoder_block(dec2, skip2, filters*2)
+    dec4 = decoder_block(dec3, skip1, filters)
 
     final_output = tf.keras.layers.Conv2D(filters=1, kernel_size=(1, 1), activation='sigmoid')(dec4)
 

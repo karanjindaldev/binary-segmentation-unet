@@ -6,7 +6,7 @@ from io import BytesIO
 import gdown
 import os
 
-url = 'https://drive.google.com/uc?id=146PXTfjwXPa0Z4avylIBZZAaOMZFmH4R'
+url = 'https://drive.google.com/uc?id=1w7Vseajhg_sIVaKqVUsjMsC8WcZukI_n'
 weights = 'unet.weights.h5'
 
 if not os.path.exists(weights):
