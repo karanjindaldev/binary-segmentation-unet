@@ -9,11 +9,17 @@ import os
 url = 'https://drive.google.com/uc?id=1w7Vseajhg_sIVaKqVUsjMsC8WcZukI_n'
 weights = 'unet.weights.h5'
 
-if not os.path.exists(weights):
-    gdown.download(url, weights)
+@st.cache_resource
+def load_model():
+    if not os.path.exists(weights):
+        gdown.download(url, weights)
 
-model = unet(input_shape=(128, 128, 3), is_inside_notebook=False)
-model.load_weights(weights)
+    model = unet(input_shape=(128, 128, 3), is_inside_notebook=False)
+    model.load_weights(weights)
+
+    return model
+
+model = load_model()
 
 st.title("Background Remover")
 
